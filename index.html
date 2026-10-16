@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>罗树人 · 相亲主页</title>
+<style>
+  :root{
+    --main:#D97757;
+    --main-dark:#B85C3E;
+    --green:#3D8361;
+    --text:#3A3733;
+    --sub:#7A736C;
+    --line:#F0E6DE;
+    --bg:#FDF9F5;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0;}
+
+  body{
+    font-family:"PingFang SC","Microsoft YaHei","Hiragino Sans GB",-apple-system,sans-serif;
+    background:
+      radial-gradient(circle at 12% 8%, #FDEDE3 0%, transparent 45%),
+      radial-gradient(circle at 88% 92%, #E8F3EC 0%, transparent 45%),
+      var(--bg);
+    color:var(--text);
+    line-height:1.85;
+    padding:32px 16px 64px;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .page{
+    max-width:720px;
+    margin:0 auto;
+  }
+
+  /* ===== 顶部卡片 ===== */
+  .hero{
+    background:linear-gradient(140deg,#FFFFFF 0%,#FFF7F1 100%);
+    border:1px solid var(--line);
+    border-radius:22px;
+    padding:34px 30px 28px;
+    text-align:center;
+    box-shadow:0 12px 34px rgba(191,140,110,.10);
+    margin-bottom:20px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero::after{
+    content:"";
+    position:absolute;
+    top:-60px;right:-60px;
+    width:170px;height:170px;
+    background:radial-gradient(circle,#FFE3D3 0%,transparent 70%);
+    border-radius:50%;
+  }
+
+  .avatar{
+    width:74px;height:74px;
+    margin:0 auto 14px;
+    border-radius:50%;
+    background:linear-gradient(135deg,var(--main) 0%,#E9A17F 100%);
+    color:#fff;
+    font-size:30px;
+    font-weight:600;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow:0 8px 20px rgba(217,119,87,.32);
+    position:relative;
+    z-index:1;
+  }
+
+  .hero h1{
+    font-size:24px;
+    font-weight:700;
+    letter-spacing:.5px;
+    margin-bottom:6px;
+    position:relative;
+    z-index:1;
+  }
+
+  .hero .sign{
+    color:var(--sub);
+    font-size:14.5px;
+    margin-bottom:18px;
+    position:relative;
+    z-index:1;
+  }
+
+  .tags{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    justify-content:center;
+    position:relative;
+    z-index:1;
+  }
+  .tags span{
+    background:#fff;
+    border:1px solid var(--line);
+    color:var(--main-dark);
+    font-size:13px;
+    padding:5px 13px;
+    border-radius:999px;
+    white-space:nowrap;
+    box-shadow:0 2px 6px rgba(191,140,110,.06);
+  }
+
+  /* ===== 通用卡片 ===== */
+  .card{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:26px 28px;
+    margin-bottom:18px;
+    box-shadow:0 6px 20px rgba(191,140,110,.07);
+  }
+
+  .card h2{
+    font-size:16.5px;
+    font-weight:700;
+    color:var(--main-dark);
+    margin-bottom:16px;
+    padding-left:13px;
+    border-left:4px solid var(--main);
+    line-height:1.3;
+    letter-spacing:.3px;
+  }
+
+  .card p{
+    font-size:15px;
+    margin-bottom:12px;
+    color:#4A4540;
+  }
+  .card p:last-child{margin-bottom:0;}
+
+  .hl{
+    color:var(--main-dark);
+    font-weight:600;
+    background:linear-gradient(180deg,transparent 62%,#FBE3D5 62%);
+    padding:0 2px;
+  }
+
+  /* ===== 信息网格 ===== */
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+  }
+  .grid div{
+    background:#FDF9F6;
+    border-radius:12px;
+    padding:11px 15px;
+    font-size:14px;
+    color:#4A4540;
+  }
+  .grid b{
+    color:var(--main-dark);
+    font-weight:600;
+    margin-right:6px;
+  }
+
+  /* ===== 列表 ===== */
+  ul.list{
+    list-style:none;
+  }
+  ul.list li{
+    position:relative;
+    padding-left:22px;
+    font-size:15px;
+    margin-bottom:10px;
+    color:#4A4540;
+  }
+  ul.list li:last-child{margin-bottom:0;}
+  ul.list li::before{
+    content:"";
+    position:absolute;
+    left:4px;
+    top:11px;
+    width:7px;height:7px;
+    border-radius:50%;
+    background:linear-gradient(135deg,var(--main),#E9A17F);
+  }
+
+  /* ===== 择偶两条列 ===== */
+  .want{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px 18px;
+  }
+  .want div{
+    font-size:14.5px;
+    padding-left:20px;
+    position:relative;
+    color:#4A4540;
+  }
+  .want div::before{
+    content:"✓";
+    position:absolute;
+    left:0;
+    top:0;
+    color:var(--green);
+    font-weight:700;
+    font-size:14px;
+  }
+
+  .no-box{
+    margin-top:16px;
+    background:#FFF4F1;
+    border:1px dashed #F0C4B4;
+    border-radius:12px;
+    padding:13px 17px;
+    font-size:14.5px;
+    color:#A85A45;
+  }
+  .no-box b{font-weight:700;}
+
+  /* ===== 联系区 ===== */
+  .contact{
+    background:linear-gradient(135deg,#D97757 0%,#E29A76 100%);
+    border:none;
+    color:#fff;
+    text-align:center;
+    padding:30px 26px;
+  }
+  .contact h2{
+    color:#fff;
+    border-left-color:rgba(255,255,255,.6);
+    text-align:left;
+  }
+  .contact p{
+    color:rgba(255,255,255,.94);
+    font-size:15px;
+  }
+  .contact .tip{
+    margin-top:14px;
+    font-size:13px;
+    color:rgba(255,255,255,.78);
+    line-height:1.7;
+  }
+
+  /* ===== 页脚 ===== */
+  .footer{
+    text-align:center;
+    font-size:12.5px;
+    color:#B3AAA2;
+    margin-top:26px;
+    line-height:1.9;
+  }
+
+  /* ===== 响应式 ===== */
+  @media (max-width:520px){
+    body{padding:20px 12px 44px;}
+    .hero{padding:26px 20px 22px;border-radius:18px;}
+    .hero h1{font-size:21px;}
+    .card{padding:22px 19px;border-radius:16px;}
+    .grid{grid-template-columns:1fr;}
+    .want{grid-template-columns:1fr;}
+    .card p, ul.list li, .want div{font-size:14.5px;}
+  }
+
+  /* ===== 打印 ===== */
+  @media print{
+    body{background:#fff;padding:0;}
+    .card,.hero{box-shadow:none;break-inside:avoid;}
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- 顶部 -->
+  <div class="hero">
+    <div class="avatar">罗</div>
+    <h1>罗树人</h1>
+    <div class="sign">广州天河 · 2002年 · 软件开发 · 未婚未育</div>
+    <div class="tags">
+      <span>176cm</span>
+      <span>本科</span>
+      <span>不烟不酒</span>
+      <span>会做饭</span>
+      <span>爱跑步 · 羽毛球</span>
+      <span>情绪稳定</span>
+    </div>
+  </div>
+
+  <!-- 一句话介绍 -->
+  <div class="card">
+    <h2>一句话认识我</h2>
+    <p>
+      2002年出生，176cm，本科，在广州天河做软件开发，生活简单、节奏轻松。
+      <span class="hl">不抽烟不喝酒，会做饭，能陪你看海，也愿意好好说话。</span>
+      想找一个情绪稳定、彼此陪伴的人，把日子过得踏实又舒服。
+    </p>
+  </div>
+
+  <!-- 关于我 -->
+  <div class="card">
+    <h2>关于我</h2>
+    <p>
+      性格开朗，朋友和家人对我的评价是<span class="hl">稳重、靠谱</span>。做事有分寸，遇事不慌，喜欢把生活安排得井井有条。
+    </p>
+    <p>
+      平时喜欢跑步、打羽毛球、逛商场、看海；休息日会打打游戏、刷刷抖音，也会做几道自己喜欢的菜。
+      每周都会抽时间去健身房或体育中心练一练，保持状态。国庆假期会出去旅游几天，也喜欢猫，可以养。
+    </p>
+  </div>
+
+  <!-- 工作与家庭 -->
+  <div class="card">
+    <h2>工作 · 家庭 · 生活基础</h2>
+    <div class="grid">
+      <div><b>职业</b>软件开发（广州天河）</div>
+      <div><b>状态</b>工作稳定，节奏轻松</div>
+      <div><b>学历</b>本科</div>
+      <div><b>籍贯</b>广东</div>
+      <div><b>居住</b>广州天河，一个人租房（一房一厅）</div>
+      <div><b>收入</b>7.5–8k，稳定</div>
+      <div><b>用车</b>暂无需求，随时可购车</div>
+      <div><b>规划</b>未来两年在广州发展</div>
+      <div><b>家庭</b>有一个弟弟，父母身体健康</div>
+      <div><b>同住</b>婚后不需要与父母同住</div>
+    </div>
+    <p style="margin-top:16px;">
+      家庭氛围很好，父母身体健康、不需要我照顾，也没有需要提前说明的家庭负担。我想先把两个人的小日子过好，其余的事一起商量着来。
+    </p>
+  </div>
+
+  <!-- 婚恋观 -->
+  <div class="card">
+    <h2>我的婚恋观</h2>
+    <p>
+      我觉得婚姻是<span class="hl">感情到位后水到渠成的结果</span>，是给彼此的一份承诺和证书，而不是一项任务。
+    </p>
+    <ul class="list">
+      <li><b>节奏：</b>我年纪还不算大，更看重性格契合与相处舒服，合适的节奏由两个人一起定。</li>
+      <li><b>孩子：</b>想要，但不用太早，尊重女方的意见和身体状态。</li>
+      <li><b>定居：</b>倾向北上广深，具体看双方的工作地点再定。</li>
+      <li><b>家务：</b>谁有空谁做，一般情况下我来做就可以。</li>
+      <li><b>财务：</b>可以一起存支付宝荷包，双方父母也会每月给一些家用，一起把小家庭经营好。</li>
+    </ul>
+    <p style="margin-top:14px;">
+      我最看重的，是两个人能<b>互相陪伴、互相照顾、互相倾诉</b>——有事好好说，没事一起玩。
+    </p>
+  </div>
+
+  <!-- 期待的你 -->
+  <div class="card">
+    <h2>期待的你</h2>
+    <div class="want">
+      <div>00后，年龄相仿更好</div>
+      <div>身高 160cm 以上</div>
+      <div>未婚未育</div>
+      <div>有份工作就好，收入不设要求</div>
+      <div>学历没有太大要求</div>
+      <div>地域不限，能一起在广州或一线城市发展更好</div>
+      <div>性格情绪稳定，愿意沟通</div>
+      <div>能接受养猫、喜欢旅行加分</div>
+    </div>
+    <div class="no-box">
+      <b>不能接受：</b>抽烟、情绪不稳定。希望我们是能好好说话、彼此体谅的两个人。
+    </div>
+  </div>
+
+  <!-- 理想日常 -->
+  <div class="card">
+    <h2>理想中的日常</h2>
+    <p>
+      周末一起去逛商场、跑步、打羽毛球，天气好就去看海；
+      回到家我做两道菜，你负责挑电影；假期背上包就去旅行几天。
+      不用轰轰烈烈，<span class="hl">踏实、轻松、有话聊</span>，就是我最想要的生活。
+    </p>
+  </div>
+
+  <!-- 联系 -->
+  <div class="card contact">
+    <h2>想认识我</h2>
+    <p>欢迎先平台私信，简单介绍一下自己，合适再加微信慢慢聊。</p>
+    <p class="tip">
+      出于隐私考虑，手机号、单位全称、详细住址等信息不公开，望理解 🌿
+    </p>
+  </div>
+
+  <div class="footer">
+    罗树人 · 广州天河 · 2002年<br>
+    真诚交友，非诚勿扰
+  </div>
+
+</div>
+
+</body>
+</html>
+```
